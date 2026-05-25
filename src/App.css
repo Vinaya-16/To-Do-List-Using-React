@@ -1,38 +1,118 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Centering the card on the screen background */
+body {
+  background-color: #f7f9fc;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* The modern white card box */
+.todo-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+}
+
+/* Header typography */
+h1 {
+  color: #1a2536;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* Input layout section */
+.input-container {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #00bfa5; /* The teal bottom border */
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+}
+
+.input-container input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-container input::placeholder {
+  color: #b0b8c4;
+}
+
+/* Teal "Add" Button */
+.add-btn {
+  background-color: #00bfa5;
   color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.add-btn:hover {
+  background-color: #00a68f;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Task items layout */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  padding: 18px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.task-item:last-child {
+  border-bottom: none; /* Removes line on final item */
+}
+
+/* Checkbox and text layout styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 15px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #00bfa5; /* Enforces native teal checkbox color */
+}
+
+.task-text {
+  font-size: 16px;
+  color: #1a2536;
+  font-weight: 400;
+}
+
+/* Styling for when a task is checked off */
+.task-text.completed {
+  text-decoration: line-through;
+  color: #b0b8c4; /* Fades out the text slightly */
+  transition: all 0.2s ease;
 }
