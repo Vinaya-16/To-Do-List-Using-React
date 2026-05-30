@@ -19,12 +19,6 @@ function App() {
       return;
     }
 
-    // const newTask = {
-    //   id: Date.now(),
-    //   text: newtask,
-    //   completed: false
-    // };
-
     fetch("http://localhost:5000/todos", {
       method: "POST",
       headers: {
@@ -95,7 +89,7 @@ function App() {
                 />
                 <span className={`task-text ${item.completed ? 'completed' : ''}`}>{item.text}</span>
               </label>
-              <button onClick={() => deleteTask(item.id)}>❌</button>
+              <button className="cross" onClick={() => deleteTask(item.id)}>❌</button>
             </li>
           ))}
         </ul>
