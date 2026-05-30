@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
 
   const [newtask, setTask] = useState("");
-  const [tasks, setTasks] = useState([
-    // { id: 1, text: "Finish project proposal", completed: false },
-    // { id: 2, text: "Buy groceries", completed: false },
-    // { id: 3, text: "Go for a run", completed: false }
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/todos")
+    .then(res => res.json())
+      .then(data => setTasks(data));
+  }, []);
 
   const addTask = () => {
 
@@ -17,20 +19,56 @@ function App() {
       return;
     }
 
-    const newTask = {
-      id: Date.now(),
-      text: newtask,
-      completed: false
-    };
+    // const newTask = {
+    //   id: Date.now(),
+    //   text: newtask,
+    //   completed: false
+    // };
 
-    setTasks([...tasks, newTask]);
-    setTask("");
+    fetch("http://localhost:5000/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: newtask
+      })
+    })
+    .then(res => res.json())
+      .then(data => {
+        setTasks([...tasks, data]);
+        setTask("");
+      });
   };
 
-  const toggleComplete = (idToToggle) => {
-    setTasks(tasks.map(t =>
-      t.id === idToToggle ? { ...t, completed: !t.completed } : t
-    ));
+  const toggleComplete = (id) => {
+
+    fetch(`http://localhost:5000/todos/${id}`, {
+      method: "PUT"
+    })
+    .then(res => res.json())
+      .then(() => {
+        setTasks(
+          tasks.map(t => 
+            t.id === id ? 
+              {...t, completed: !t.completed} : t
+          )
+        );
+      });
+
+    // setTasks(tasks.map(t =>
+    //   t.id === id ? { ...t, completed: !t.completed } : t
+    // ));
+  };
+
+  const deleteTask = (id) => {
+    fetch(`http://localhost:5000/todos/${id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+      .then(() => {
+        setTasks(tasks.filter(t => t.id !== id));
+      });
   };
 
   return (
@@ -57,6 +95,7 @@ function App() {
                 />
                 <span className={`task-text ${item.completed ? 'completed' : ''}`}>{item.text}</span>
               </label>
+              <button onClick={() => deleteTask(item.id)}>❌</button>
             </li>
           ))}
         </ul>
